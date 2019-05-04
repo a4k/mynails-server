@@ -12,85 +12,6 @@ class Schedule extends MainClass {
 
     }
 
-    // получить расписание по мастеру
-    public function getByMaster($options) {
-
-        if($options) {
-
-            if(isset($options->master_id)) {
-
-                $id = $options->master_id;
-
-                return $this->db->scheduleGetByMaster($id);
-
-            }
-
-        }
-
-        return $this->bad("Ошибка");
-    }
-
-    // получить расписание по услуге
-    public function getByService($options) {
-
-        if($options) {
-
-            if(isset($options->service_id)) {
-
-                $id = $options->service_id;
-
-                return $this->db->scheduleGetByService($id);
-
-            }
-
-        }
-
-        return $this->bad("Ошибка");
-    }
-
-    // получить конкретное расписание по ID
-    public function getSchedule($options) {
-
-        return $this->bad("Ошибка");
-    }
-
-    // получить расписание по времени
-    public function getByTime($options) {
-
-        if($options) {
-
-            if(isset($options->time)) {
-
-                $time = $options->time;
-
-                return $this->db->scheduleGetByTime($time);
-
-            }
-
-        }
-
-        return $this->bad("Ошибка");
-    }
-
-    // получить расписание по дате
-    public function getByDate($options) {
-
-        if($options) {
-
-            if(isset($options->day) && isset($options->month) && isset($options->year)) {
-
-                $day = $options->day;
-                $month = $options->month;
-                $year = $options->year;
-
-                return $this->db->scheduleGetByTime($day, $month, $year);
-
-            }
-
-        }
-
-        return $this->bad("Ошибка");
-    }
 
     // получить расписание по фильтру
     public function getByFilter($options) {
@@ -128,6 +49,21 @@ class Schedule extends MainClass {
     // выбрать расписание
     public function chooseSchedule($options) {
 
+        if($options) {
+
+            if(isset($options->schedule_id) && isset($options->name) && isset($options->phone)) {
+
+                $schedule_id = $options->schedule_id;
+                $name = $options->name;
+                $phone = $options->phone;
+
+                $result = $this->db->orderCreate($schedule_id, $name, $phone);
+
+                return $this->good($result);
+            }
+
+
+        }
         return $this->bad("Ошибка");
     }
 

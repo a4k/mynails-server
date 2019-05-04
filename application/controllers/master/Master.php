@@ -17,7 +17,7 @@ class Master extends MainClass {
 
         if($options) {
 
-            return $this->db->getMasters();
+            return $this->db->masterAll();
 
         }
 
@@ -33,8 +33,8 @@ class Master extends MainClass {
 
                 $id = $options->master_id;
 
-                $masterInfo = $this->db->getMasterById($id);
-                $masterServices = $this->db->getServicesByMasterId($id);
+                $masterInfo = $this->db->masterDetail($id);
+                $masterServices = $this->db->masterServices($id);
 
                 $masterInfo->services = $masterServices;
 

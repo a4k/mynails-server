@@ -21,7 +21,7 @@ class Router {
         $this->db = new DB();
 
         $this->schedule = new Schedule($this->db);
-        $this->service = new Master($this->db);
+        $this->service = new Service($this->db);
         $this->master = new Master($this->db);
     }
 
@@ -44,21 +44,6 @@ class Router {
             if($method) {
 
                     switch($method) {
-
-                        // получить расписание по мастеру
-                        case 'schedule.master': return $schedule->getByMaster($options); break;
-
-                        // получить расписание по услуге
-                        case 'schedule.service': return $schedule->getByService($options); break;
-
-                        // получить конкретное расписание по ID
-                        case 'schedule.get': return $schedule->getSchedule($options); break;
-
-                        // получить расписание по времени
-                        case 'schedule.bytime': return $schedule->getByTime($options); break;
-
-                        // получить расписание по дате
-                        case 'schedule.bydate': return $schedule->getByDate($options); break;
 
                         // получить расписание по фильтру
                         case 'schedule.filter': return $schedule->getByFilter($options); break;

@@ -17,7 +17,7 @@ class Service extends MainClass {
 
         if($options) {
 
-            return $this->db->getServices();
+            return $this->db->serviceAll();
 
         }
 
