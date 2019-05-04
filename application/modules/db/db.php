@@ -5,7 +5,8 @@ class DB {
     private $connection;
 
     public function __construct() {
-        $host = 'localhost';
+        // $host = 'localhost';
+        $host = '192.168.0.102';
         $dbName = 'mynails';
         $user = 'root';
         $pass = '';
@@ -51,9 +52,38 @@ class DB {
     }
 
     // получить расписание по дате
-    public function scheduleGetByDate() {
-        $sql = 'SELECT * FROM schedules';
+    public function scheduleGetByDate($day, $month, $year) {
+        $sql = 'SELECT * FROM schedules WHERE day = :day AND month = :month AND year = :year';
         $stm = $this->connection->prepare($sql);
+        $stm->bindValue(':day', $day, PDO::PARAM_INT);
+        $stm->bindValue(':month', $month, PDO::PARAM_INT);
+        $stm->bindValue(':year', $year, PDO::PARAM_INT);
+        $stm->execute();
+        return $stm->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    // получить расписание по фильтру
+    public function scheduleGetByFilter($arFilter) {
+
+        $filter = '';
+
+        foreach ($arFilter as $key => $value) {
+            if($filter === '') {
+                $filter = $key . '= :' . $key;
+            } else {
+                $filter .= ' AND ' . $key . '= :' . $key;
+            }
+        }
+
+        $sql = 'SELECT * FROM schedules WHERE ' . $filter;
+        $stm = $this->connection->prepare($sql);
+
+
+        foreach ($arFilter as $key => $value) {
+            $stm->bindValue(':' . $key, $value, PDO::PARAM_INT);
+        }
+
+
         $stm->execute();
         return $stm->fetchAll(PDO::FETCH_CLASS);
     }
@@ -72,7 +102,7 @@ class DB {
         return $stm->fetchAll(PDO::FETCH_CLASS);
     }
 
-    // получить всех мастеров
+    // получить мастера
     public function getMasterById($master_id) {
         $sql = 'SELECT * FROM masters WHERE id = :master_id';
         $stm = $this->connection->prepare($sql);
@@ -86,6 +116,17 @@ class DB {
     public function getServices() {
         $sql = 'SELECT * FROM services';
         $stm = $this->connection->prepare($sql);
+        $stm->execute();
+        return $stm->fetchAll(PDO::FETCH_CLASS);
+    }
+
+    // получить мастера
+    public function getServicesByMasterId($master_id) {
+        $sql = 'SELECT MA.id, MA.master_id, MA.service_id, S.name, S.price, S.time 
+        FROM masters_services as MA, services as S 
+        WHERE MA.master_id = :master_id AND S.id = MA.service_id';
+        $stm = $this->connection->prepare($sql);
+        $stm->bindValue(':master_id', $master_id, PDO::PARAM_INT);
         $stm->execute();
         return $stm->fetchAll(PDO::FETCH_CLASS);
     }

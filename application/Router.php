@@ -40,6 +40,7 @@ class Router {
         if($options && isset($options->method)) {
             $method = $options->method;
 
+
             if($method) {
 
                     switch($method) {
@@ -58,6 +59,9 @@ class Router {
 
                         // получить расписание по дате
                         case 'schedule.bydate': return $schedule->getByDate($options); break;
+
+                        // получить расписание по фильтру
+                        case 'schedule.filter': return $schedule->getByFilter($options); break;
 
                         // выбрать расписание
                         case 'schedule.choose': return $schedule->chooseSchedule($options); break;

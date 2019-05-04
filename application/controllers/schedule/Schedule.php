@@ -75,6 +75,53 @@ class Schedule extends MainClass {
     // получить расписание по дате
     public function getByDate($options) {
 
+        if($options) {
+
+            if(isset($options->day) && isset($options->month) && isset($options->year)) {
+
+                $day = $options->day;
+                $month = $options->month;
+                $year = $options->year;
+
+                return $this->db->scheduleGetByTime($day, $month, $year);
+
+            }
+
+        }
+
+        return $this->bad("Ошибка");
+    }
+
+    // получить расписание по фильтру
+    public function getByFilter($options) {
+
+        if($options) {
+
+            $arFilter = array(); // Массив для фильтрации по полям
+
+            // Формирования массива фильтра
+            if(isset($options->day)) {
+                $arFilter["day"] = $options->day;
+            }
+            if(isset($options->month)) {
+                $arFilter["month"] = $options->month;
+            }
+            if(isset($options->year)) {
+                $arFilter["year"] = $options->year;
+            }
+            if(isset($options->master_id)) {
+                $arFilter["master_id"] = $options->master_id;
+            }
+            if(isset($options->service_id)) {
+                $arFilter["service_id"] = $options->service_id;
+            }
+
+
+
+            return $this->db->scheduleGetByFilter($arFilter);
+
+        }
+
         return $this->bad("Ошибка");
     }
 
@@ -83,4 +130,5 @@ class Schedule extends MainClass {
 
         return $this->bad("Ошибка");
     }
+
 }
