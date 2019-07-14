@@ -4,12 +4,19 @@ class DB {
 
     private $connection;
 
-    public function __construct() {
-        // $host = 'localhost';
-        $host = '192.168.0.100';
-        $dbName = 'mynails';
-        $user = 'root';
-        $pass = '';
+    public function __construct($TYPE) {
+
+        if($TYPE === 'DEV') {
+            $host = '192.168.0.100';
+            $dbName = 'mynails';
+            $user = 'root';
+            $pass = '';
+        } else {
+            $host = 'localhost';
+            $dbName = 'h99918lb_mynails';
+            $user = 'h99918lb_mynails';
+            $pass = 'e123456';
+        }
         $this->connection = new PDO('mysql:dbname=' . $dbName . ';host=' . $host, $user, $pass);
     }
 

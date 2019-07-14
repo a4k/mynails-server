@@ -1,8 +1,11 @@
 <?php
 
 error_reporting(-1);
+//ini_set('display_errors', TRUE);
+//ini_set('display_startup_errors', TRUE);
 
-require_once '../application/Router.php';
+$filename = '../application/Router.php';
+require($filename);
 
 $router = new Router(); // router contains regular php methods
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__DIR__) . '/MainClass.php';
+require_once __DIR__ . '/MainClass.php';
 
 // Расписание
 class Schedule extends MainClass {

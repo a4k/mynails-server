@@ -1,10 +1,10 @@
 <?
 
 
-require_once dirname(__DIR__) . '/application/modules/db/db.php';
-require_once dirname(__DIR__) . '/application/controllers/schedule/schedule.php';
-require_once dirname(__DIR__) . '/application/controllers/service/service.php';
-require_once dirname(__DIR__) . '/application/controllers/master/master.php';
+require_once __DIR__ . '/modules/db/db.php';
+require_once __DIR__ . '/controllers/schedule/Schedule.php';
+require_once __DIR__ . '/controllers/service/Service.php';
+require_once __DIR__ . '/controllers/master/Master.php';
 
 
 class Router {
@@ -18,7 +18,7 @@ class Router {
 
     public function __construct()
     {
-        $this->db = new DB();
+        $this->db = new DB('PRODUCTION');
 
         $this->schedule = new Schedule($this->db);
         $this->service = new Service($this->db);
